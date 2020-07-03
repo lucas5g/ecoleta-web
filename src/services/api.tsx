@@ -3,7 +3,7 @@ import axios from 'axios'
 const hostname = () => {
   const app = window.location.hostname
 
-  return app === 'ecoleta-regiao.netlify.app' ? 'https://ecoleta-lucas.heroku.com' :  'http://localhost:8000'
+  return app === 'ecoleta-regiao.netlify.app' ? 'https://ecoleta-lucas.herokuapp.com/' :  'http://localhost:8000'
 }
 
 const api = axios.create({
