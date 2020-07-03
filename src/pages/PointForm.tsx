@@ -5,8 +5,10 @@ import { FiArrowLeft } from 'react-icons/fi'
 import { Link,useHistory } from 'react-router-dom'
 import { Map, TileLayer, Marker } from 'react-leaflet'
 import {LeafletMouseEvent} from 'leaflet'
-import axios from 'axios'
+import axios from '../services/api'
 import api from '../services/api'
+
+import Dropzone from '../components/Dropzone'
 
 interface Item{
   id: number;
@@ -129,6 +131,9 @@ const PointForm = () => {
       </header>
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do <br />ponto de coleta</h1>
+
+        <Dropzone />
+        
         <fieldset>
           <legend>
             <h2>Dados</h2>
