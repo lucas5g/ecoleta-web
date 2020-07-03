@@ -38,6 +38,8 @@ const PointForm = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0])
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0,0])
+
+  const [selectedFile, setSelectedFile] = useState<File>()
   const history = useHistory()
 
   useEffect(() => {
@@ -51,6 +53,7 @@ const PointForm = () => {
   useEffect(() => {
     api.get('items').then(response => {
       setItems(response.data)
+
     })
   }, [])
 
@@ -109,8 +112,21 @@ const PointForm = () => {
     const [latitude, longitude] = selectedPosition
     const items = selectedItems
 
-    const data = {name, email, whatssap, uf, city, latitude, longitude, items}
+    const data = new FormData()
 
+    data.append('name', name)
+    data.append('email', email)
+    data.append('whatsapp', whatssap)
+    data.append('uf', uf)
+    data.append('city', city)
+    data.append('latitude', String(latitude))
+    data.append('longitude', String(longitude))
+    data.append('items', items.join(','))
+
+    if(selectedFile){
+      data.append('image', selectedFile)
+    }
+  
     await api.post('points', data)
     alert('Cadastrado com sucesso')
     history.push('/')
@@ -132,7 +148,7 @@ const PointForm = () => {
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do <br />ponto de coleta</h1>
 
-        <Dropzone />
+        <Dropzone onFileUploaded={setSelectedFile}/>
         
         <fieldset>
           <legend>
